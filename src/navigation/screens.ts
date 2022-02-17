@@ -1,5 +1,5 @@
 export const SCREENS = {
   HOME: 'HOME',
-  REACT_NAVIGATION: 'REACT_NAVIGATION',
-  REANIMATED: 'REANIMATED',
+  REACT_NAVIGATION: 'React Vanilla Animation',
+  REANIMATED: 'Reanimated',
 };

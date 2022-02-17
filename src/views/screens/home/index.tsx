@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import {SCREENS} from '../../navigation/screens';
+import {SCREENS} from '../../../navigation/screens';
 
 type Props = {
   navigation: any;
@@ -14,7 +14,7 @@ function Home(props: Props) {
         <Text style={styles.mainText}> REACT NATIVE ANIMATION </Text>
       </Pressable>
 
-      <Pressable>
+      <Pressable onPress={() => navigation.navigate(SCREENS.REANIMATED)}>
         <Text style={styles.mainText}> REANIMATED </Text>
       </Pressable>
     </View>
