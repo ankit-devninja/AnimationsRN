@@ -11,6 +11,12 @@ import React, {useEffect} from 'react';
 
 const SIZE = 80.0;
 
+// Creating Worklets that are unique JS func that can be called from UI thread
+const handleRotation = (progress: Animated.SharedValue<number>) => {
+  'worklet';
+  return `${progress.value * 2 * Math.PI}rad`;
+};
+
 function ReactNativeReanimated() {
   const progress = useSharedValue(1);
   const scale = useSharedValue(2);
@@ -19,10 +25,7 @@ function ReactNativeReanimated() {
     return {
       opacity: progress.value,
       borderRadius: (progress.value * SIZE) / 2,
-      transform: [
-        {scale: scale.value},
-        {rotate: `${progress.value * 2 * Math.PI}rad`},
-      ],
+      transform: [{scale: scale.value}, {rotate: handleRotation(progress)}],
     };
   }, []);
 
