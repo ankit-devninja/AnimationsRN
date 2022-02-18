@@ -4,8 +4,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './src/views/screens/home';
 import ReactNativeAnimation from './src/views/screens/reactNativeAnimation';
-import ReactNativeReanimated from './src/views/screens/reanimated';
+
 import {SCREENS} from './src/navigation/screens';
+import {
+  ReanimatedPanGesture,
+  VanillaReanimated,
+} from './src/views/screens/reanimated';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,9 +22,10 @@ function App() {
           name={SCREENS.REACT_NAVIGATION}
           component={ReactNativeAnimation}
         />
+        <Stack.Screen name={SCREENS.REANIMATED} component={VanillaReanimated} />
         <Stack.Screen
-          name={SCREENS.REANIMATED}
-          component={ReactNativeReanimated}
+          name={SCREENS.REANIMATED_PANGESTURE}
+          component={ReanimatedPanGesture}
         />
       </Stack.Navigator>
     </NavigationContainer>

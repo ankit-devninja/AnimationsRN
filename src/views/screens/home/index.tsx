@@ -17,6 +17,11 @@ function Home(props: Props) {
       <Pressable onPress={() => navigation.navigate(SCREENS.REANIMATED)}>
         <Text style={styles.mainText}> REANIMATED </Text>
       </Pressable>
+
+      <Pressable
+        onPress={() => navigation.navigate(SCREENS.REANIMATED_PANGESTURE)}>
+        <Text style={styles.mainText}> REANIMATED: PAN GESTURE </Text>
+      </Pressable>
     </View>
   );
 }
@@ -25,7 +30,7 @@ const styles = StyleSheet.create({
   mainText: {
     backgroundColor: 'blue',
     margin: 20,
-    fontSize: 20,
+    fontSize: 16,
     color: 'white',
     textAlign: 'center',
     padding: 20,
