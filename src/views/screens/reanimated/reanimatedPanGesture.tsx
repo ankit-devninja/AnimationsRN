@@ -1,24 +1,27 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Animated, {
-  useSharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
+  useSharedValue,
+  withSpring,
 } from 'react-native-reanimated';
 
 import {
+  GestureHandlerRootView,
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
 
-const SIZE = 100;
+const SIZE = 100.0;
+const CIRCLE_RADIUS = SIZE * 2;
 
 type ContextType = {
   translateX: number;
   translateY: number;
 };
 
-function ReanimatedPanGesture() {
+export default function ReanimatedPanGesture() {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
@@ -31,47 +34,65 @@ function ReanimatedPanGesture() {
       context.translateY = translateY.value;
     },
     onActive: (event, context) => {
-      console.log('EVENT', event);
       translateX.value = event.translationX + context.translateX;
       translateY.value = event.translationY + context.translateY;
     },
-    onEnd: event => {
-      translateX.value = 0;
-      translateY.value = 0;
+    onEnd: () => {
+      const distance = Math.sqrt(translateX.value ** 2 + translateY.value ** 2);
+
+      if (distance < CIRCLE_RADIUS + SIZE / 2) {
+        translateX.value = withSpring(0);
+        translateY.value = withSpring(0);
+      }
     },
   });
 
-  const rStyles = useAnimatedStyle(() => {
+  const rStyle = useAnimatedStyle(() => {
     return {
       transform: [
-        {translateX: translateX.value},
-        {translateY: translateY.value},
+        {
+          translateX: translateX.value,
+        },
+        {
+          translateY: translateY.value,
+        },
       ],
     };
   });
 
   return (
-    <View style={styles.container}>
-      <PanGestureHandler onGestureEvent={panGestureEvent}>
-        <Animated.View style={[styles.square, rStyles]} />
-      </PanGestureHandler>
-    </View>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <View style={styles.container}>
+        <View style={styles.circle}>
+          <PanGestureHandler onGestureEvent={panGestureEvent}>
+            <Animated.View style={[styles.square, rStyle]} />
+          </PanGestureHandler>
+        </View>
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
   },
   square: {
     width: SIZE,
     height: SIZE,
-    borderRadius: 15,
-    backgroundColor: '#001a72',
+    backgroundColor: 'rgba(0, 0, 256, 0.5)',
+    borderRadius: 20,
+  },
+  circle: {
+    width: CIRCLE_RADIUS * 2,
+    height: CIRCLE_RADIUS * 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: CIRCLE_RADIUS,
+    borderWidth: 5,
+    borderColor: 'rgba(0, 0, 256, 0.5)',
   },
 });
-
-export default ReanimatedPanGesture;
