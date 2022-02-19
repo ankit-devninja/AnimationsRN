@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   square: {
     width: SIZE,
     height: SIZE,
-    backgroundColor: 'rgba(0, 0, 256, 0.5)',
+    backgroundColor: '#d81b60',
     borderRadius: 20,
   },
   circle: {
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: CIRCLE_RADIUS,
     borderWidth: 5,
-    borderColor: 'rgba(0, 0, 256, 0.5)',
+    borderColor: '#d81b60',
   },
 });

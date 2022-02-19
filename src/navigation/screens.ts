@@ -3,4 +3,5 @@ export const SCREENS = {
   REACT_NAVIGATION: 'React Vanilla Animation',
   REANIMATED: 'Reanimated',
   REANIMATED_PANGESTURE: 'Reanimated - Pan Gesture',
+  REANIMATED_LISTANIMATION: 'Reanimated - List Animations',
 };

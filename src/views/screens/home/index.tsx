@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, ScrollView} from 'react-native';
 import {SCREENS} from '../../../navigation/screens';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 function Home(props: Props) {
   const {navigation} = props;
   return (
-    <View>
+    <ScrollView>
       <Pressable onPress={() => navigation.navigate(SCREENS.REACT_NAVIGATION)}>
         <Text style={styles.mainText}> REACT NATIVE ANIMATION </Text>
       </Pressable>
@@ -22,7 +22,12 @@ function Home(props: Props) {
         onPress={() => navigation.navigate(SCREENS.REANIMATED_PANGESTURE)}>
         <Text style={styles.mainText}> REANIMATED: PAN GESTURE </Text>
       </Pressable>
-    </View>
+
+      <Pressable
+        onPress={() => navigation.navigate(SCREENS.REANIMATED_LISTANIMATION)}>
+        <Text style={styles.mainText}> REANIMATED: LIST ANIMATION</Text>
+      </Pressable>
+    </ScrollView>
   );
 }
 
