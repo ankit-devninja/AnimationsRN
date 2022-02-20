@@ -10,6 +10,7 @@ import {
   ReanimatedPanGesture,
   VanillaReanimated,
   ReanimatedLayoutAnimations,
+  ReanimatedPlayground,
 } from './src/views/screens/reanimated';
 
 const Stack = createNativeStackNavigator();
@@ -31,6 +32,10 @@ function App() {
         <Stack.Screen
           name={SCREENS.REANIMATED_LISTANIMATION}
           component={ReanimatedLayoutAnimations}
+        />
+        <Stack.Screen
+          name={SCREENS.REANIMATED_PLAYGROUND}
+          component={ReanimatedPlayground}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,7 +1,8 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import Animated, {Layout, ZoomIn, ZoomOut} from 'react-native-reanimated';
 
 const LIST_ITEM_COLOR = '#ba68c8';
 
@@ -10,8 +11,16 @@ interface Item {
 }
 
 export default function ReanimatedLayoutAnimations() {
+  const initialMode = useRef<boolean>(true);
+
+  useEffect(() => {
+    initialMode.current = false;
+  }, []);
+
   // [new Array(10).fill(0).map((_, index) => ({id: index})),
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<Item[]>(
+    new Array(10).fill(0).map((_, index) => ({id: index})),
+  );
 
   const onAdd = useCallback(() => {
     setItems(currentItems => {
@@ -20,11 +29,26 @@ export default function ReanimatedLayoutAnimations() {
     });
   }, []);
 
+  const onDeleted = useCallback((itemId: number) => {
+    setItems(currentItems => {
+      return currentItems.filter(item => item.id !== itemId);
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container}>
         {items.map((item, index) => {
-          return <View key={item.id} style={styles.listItem} />;
+          return (
+            <Animated.View
+              key={item.id}
+              entering={initialMode ? ZoomIn.delay(100 * index) : ZoomIn} // ZoomIn
+              exiting={ZoomOut}
+              layout={Layout.delay(50)}
+              onTouchEnd={() => onDeleted(item.id)}
+              style={styles.listItem}
+            />
+          );
         })}
       </ScrollView>
 
@@ -43,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: LIST_ITEM_COLOR,
     height: 100,
     width: '90%',
-    marginTop: 15,
+    marginVertical: 15,
     alignSelf: 'center',
     borderRadius: 20,
     elevation: 5,
